@@ -39,23 +39,30 @@ youtubeModule(function * fetch(data){
 		var redditSubmits = Object.keys(redditUserSubmits ).length
 		if(redditSubmits == 25) redditSubmits = '25+';		
 		
+
 		if(itemsResult && itemsResult.length>0){
 			let info = itemsResult[0];
+			
+			var youtubeTime = new Date(Date.parse(info.snippet.publishedAt.replace(/ *\(.*\)/,"")));
+			var redditTime = new Date(data.created_utc *1000);
+			var diffTime = (redditTime-youtubeTime)/1000;
+		
+			
 			return {
 				reddit_user: data.author,
 				reddit_user_comment_count: redditComments,
 				reddit_user_submitted_count: redditSubmits,
 				reddit_permalink: 'https://www/reddit.com'+data.permalink,
-				reddit_posted_at: new Date(data.created_utc *1000),
+				reddit_posted_at: redditTime,
 				reddit_title: data.title,
 				
 				youtube_link: data.url,
-				youtube_posted_at: new Date(Date.parse(info.snippet.publishedAt.replace(/ *\(.*\)/,""))),
+				youtube_posted_at: youtubeTime,
 				youtube_title:info.snippet.title,
 				youtube_description:info.snippet.description,
 
 
-				youtube_to_reddit_time: Math.round((new Date(data.created_utc *1000) - new Date(Date.parse(info.snippet.publishedAt.replace(/ *\(.*\)/,"")))) / (1000 * 60)),
+				youtube_to_reddit_time: diffTime,
 				//reddit_FULL: data,
 				//youtube_FULL: info.snippet,
 				
