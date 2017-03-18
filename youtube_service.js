@@ -1,6 +1,10 @@
 "use strict";
 //We  need use strict because of es6 features
 var Studio = require('studio');
+
+var studioCluster = require('studio-cluster');
+Studio.use(studioCluster({rpcPort:8002}));
+
 var request = require('request');
 var config  = require('config.json')('./test.json');
 var reddit = require('./reddit');

@@ -35,4 +35,5 @@ Studio.serviceClass receives a class as parameter and returns an instance of thi
 and loads all their functions as studio services, it also uses the name of the class as namespace
 we could have used this for Youtube service i just wanted to show both options
 */
-Studio.serviceClass(Reddit);
+var serviceObj = Studio.serviceClass(Reddit);
+serviceObj.searchForContent.retry(1)
